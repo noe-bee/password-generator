@@ -10,22 +10,23 @@ function generatePassword() { //beginning of the generate password function
   var userLength = window.prompt('How many characters do you want your password to be? NOTE: Must be between 8-128 characters.'); //storing what use inputted
   userLength = parseInt(userLength); //turns user input to an integer
 
-if (isNaN(userLength) || userLength < 8 || userLength > 128) {
-  window.confirm("Oops. Try again. Password must be between 8 - 123 characters");
+if (isNaN(userLength) || userLength < 8 || userLength > 128) { //if user inputs a password length not between 8-128, send alert
+  window.confirm("ERROR. Password must be between 8-123 characters");
   return generatePassword()
 }
-var askLowerCase = window.confirm('Would you like lowercase characters?');  //ask for lowercase
-var askUpperCase = window.confirm('Would you like uppercase characters?'); //ask for uppercase
-var askNumbers = window.confirm('Would you like to include numbers?'); //ask for numbers
-var askSpecials = window.confirm('Would you like special characters?'); //ask for special characters
+var askLowerCase = window.confirm('Would you like lowercase characters? Cancel=NO Ok=YES');  //ask for lowercase
+var askUpperCase = window.confirm('Would you like uppercase characters? Cancel=NO Ok=YES'); //ask for uppercase
+var askNumbers = window.confirm('Would you like to include numbers? Cancel=NO Ok=YES'); //ask for numbers
+var askSpecials = window.confirm('Would you like special characters? Cancel=NO Ok=YES'); //ask for special characters
 
-if (!askLowerCase && !askUpperCase && !askNumbers && !askSpecials) {
-  window.confirm("Oops. Try Again. Must choose at least one character type to generate a password.");
+if (!askLowerCase && !askUpperCase && !askNumbers && !askSpecials) { //if user does not pick any character type, send alert
+  window.confirm("ERROR: Must choose at least one character type to generate password.");
   return generatePassword();
 }
 var allPossibilities= [];
-var finalPassword= [];
+var finalPassword= ''; //a string because we will use "+=" to concat when iterating
 
+// if user wants a certain character type, update the allPossibilites array
   if (askLowerCase) {
   allPossibilities = allPossibilities.concat(allLowerCase);
   console.log(allPossibilities);
@@ -43,12 +44,12 @@ var finalPassword= [];
   console.log(allPossibilities);
   }
 
-for (i = 0; i < userLength; i++) {
-  finalPassword += allPossibilities[Math.floor(Math.random()*allPossibilities.length)];
+for (i = 0; i < userLength; i++) { // concat string iteration for finalPassword
+  finalPassword += allPossibilities[Math.floor(Math.random()*allPossibilities.length)]; 
   console.log(finalPassword);
 }
 
-window.alert("This is you new password: " + finalPassword) //shows an alert, how about for showing on page?
+return finalPassword;
 
 }
 
